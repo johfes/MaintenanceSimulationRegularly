@@ -71,9 +71,9 @@ public class Machine {
 	public void maintenanceStart(){
 		System.out.println("Wartungsbeginn "+
 						String.format(Simulation.getFormat(), Simulation.getSimulationTime()));
-		Simulation.machine.status = "wartung";
+		status = "wartung";
 		double timeToMaintenanceEnd = RandomGenerator.generateNextMaintenanceEnd();
-		Simulation.machine.downTime += timeToMaintenanceEnd;
+		downTime += timeToMaintenanceEnd;
 		double maintenanceEndTime = Simulation.getSimulationTime() + timeToMaintenanceEnd;
 		Simulation.addToFel(maintenanceEndTime, "Wartungsende");
 		System.out.println("Wartungsende wurde geplant: "+
@@ -86,7 +86,6 @@ public class Machine {
 	    	System.out.println("Ausfall abgewendet: "+
 	    					String.format(Simulation.getFormat(), entryToDelete));
 	    }
-
 	}
 	
 	public void maintenanceEnd(){
@@ -99,6 +98,8 @@ public class Machine {
 		double failureTime = Simulation.getSimulationTime()+
 					RandomGenerator.generateNextFailure();
     	Simulation.addToFel(failureTime, "Ausfall");
+		System.out.println("Nächster Ausfall wurde geplant: "+
+				String.format(Simulation.getFormat(), failureTime));
 		
 		if(countWS >= 1){
 			countWS--;
